@@ -71,3 +71,38 @@ log_format = '%(levelname)s - %(message)s'
 URL_ADMIN_CLIENT_AUTHZ_POLICIES = URL_ADMIN_CLIENT + "/authz/resource-server/policy"
 URL_ADMIN_CLIENT_AUTHZ_ROLE_BASED_POLICY = URL_ADMIN_CLIENT_AUTHZ_POLICIES + "/role"
 URL_ADMIN_CLIENT_AUTHZ_ROLE_BASED_PERMISSION = URL_ADMIN_CLIENT + "/authz/resource-server/permission/resource"
+
+##########################################################################
+# create resource
+        create_client_authz_resource(keycloak_admin, keycloak_client_id, payload={
+            "scopes": [],
+            "attributes": {},
+            "uris": [],
+            "name": name,
+            "ownerManagedAccess": "",
+            "displayName": name
+        }, skip_exists=True)
+    
+# create role based policy
+        create_client_authz_role_based_policy(keycloak_admin, keycloak_client_id, payload={
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "name": "Policy-1",
+            "roles": [
+                {
+                "id": id
+                }
+            ]
+            }, skip_exists=True)
+    
+    create_client_authz_role_based_permission(keycloak_admin, keycloak_client_id, payload={
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "name": "Permission-" + key,
+            "resources": list(resource_ids),
+            "policies": [
+                policy_id
+            ]
+            }, skip_exists=True)
