@@ -59,3 +59,15 @@ def get_client_authz_policies(keycloak_admin, client_id):
     params_query = {"first": 0, "max": 20, "permission": False}
     data_raw = keycloak_admin.raw_get(URL_ADMIN_CLIENT_AUTHZ_POLICIES.format(**params_path), **params_query)
     return raise_error_from_response(data_raw, KeycloakGetError)
+
+##########################################################################
+# Variables
+
+
+version = '1.0.0'
+
+log_format = '%(levelname)s - %(message)s'
+
+URL_ADMIN_CLIENT_AUTHZ_POLICIES = URL_ADMIN_CLIENT + "/authz/resource-server/policy"
+URL_ADMIN_CLIENT_AUTHZ_ROLE_BASED_POLICY = URL_ADMIN_CLIENT_AUTHZ_POLICIES + "/role"
+URL_ADMIN_CLIENT_AUTHZ_ROLE_BASED_PERMISSION = URL_ADMIN_CLIENT + "/authz/resource-server/permission/resource"
